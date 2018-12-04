@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/allya15/Github_Avatar_Downloader#readme",
   "dependencies": {
+    "dotenv": "^6.1.0",
+    "mkdirp": "^0.5.1",
     "request": "^2.88.0"
   }
 }

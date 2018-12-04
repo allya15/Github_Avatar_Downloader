@@ -24,26 +24,58 @@ function getRepoContributors(repoOwner, repoName, cb) {
   });
 }
 
-function callback(err, result){
-  if (err) {
-    console.log("Errors:", err);
+
+
+// function downloadImageByURL(url, filePath) {
+//   request.get(url)
+//   .on('error', function(err) {
+//     throw err;
+//   })
+//   .pipe(fs.createWriteStream('./avatars/' + [id] + ".JPEG"));
+//     .on('finish', function(response) {
+//       console.log('filed created')
+//     })
+// }
+
+function downloadAvatar(id, avatar_url) {
+  request.get(avatar_url)
+    .on('error', function (err) {
+      throw err;
+    })
+    .pipe(fs.createWriteStream('./avatars/' + [id] + ".JPEG"))
+        .on('finish', function(response) {
+          console.log('wrote a file!')
+        })
   }
-  var array = JSON.parse(result);
-  array.forEach(function (obj) {
-    var avatarURL = obj.avatar_url;
-    downloadImageByURL(avatarURL, 'avatars/' + obj.login + '.jpg');
-  });
-}
 
-function downloadImageByURL(url, filePath) {
-  request.get(url)
-  .on('error', function(err) {
-    throw err;
-  })
-  .pipe(fs.createWriteStream(filePath));
-}
+// function callback(err, result){
+//   if (err) {
+//     console.log("Errors:", err);
+//   }
+//   var array = JSON.parse(result);
+//   array.forEach(function (obj) {
+//     var avatarURL = obj.avatar_url;
+//     downloadImageByURL(avatarURL, 'avatars/' + obj.login + '.jpg');
+//   });
+// }
 
-getRepoContributors(myArgs[0], myArgs[1], callback);
+// function downloadAvatar(id, avatar_url) {
+//   request.get(avatar_url)
+//     .on('error', function (err) {
+//       throw err;
+//     })
+//     .pipe(fs.createWriteStream('./avatars/' + [id] + ".JPEG"))
+//         .on('finish', function(response) {
+//           console.log('wrote a file!')
+//         })
+//   }
+
+
+ // list.forEach(function (contributor){
+ //       downloadAvatar(contributor.avatar_url, contributor.id);
+ //     });
+
+getRepoContributors(myArgs[0], myArgs[1], downloadAvatar);
 
 // getRepoContributors("jquery", "jquery", function(err, result) {
 //   console.log("Errors:", err);
